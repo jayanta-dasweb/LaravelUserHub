@@ -1,0 +1,252 @@
+
+#loaderBox{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cdcdcd7d;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    display: grid;
+    color: #854f1d;
+    background: radial-gradient(farthest-side, currentColor calc(100% - 6px), #0000 calc(100% - 5px) 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 13px), #000 calc(100% - 12px));
+    border-radius: 50%;
+    animation: l19 2s infinite linear;
+}
+
+.loader::before,
+.loader::after {
+    content: "";
+    grid-area: 1/1;
+    background:
+        linear-gradient(currentColor 0 0) center,
+        linear-gradient(currentColor 0 0) center;
+    background-size: 100% 10px, 10px 100%;
+    background-repeat: no-repeat;
+}
+
+.loader::after {
+    transform: rotate(45deg);
+}
+
+@keyframes l19 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
+
+/* navbar  */
+#navbar{
+    height: 60px;
+    width: 95%;
+}
+
+#navBarRightSideContent{
+    width: 185px;
+}
+
+#hamburgerMenu{
+    cursor: pointer;
+}
+
+#navBarLeftSideContent{
+    width: 170px;
+}
+
+#navLink{
+    text-decoration: none;
+    color: #000;
+}
+
+/* Sidemenue  */
+#sideBarMenue{
+    height: calc(100vh - 60px);
+    width: 280px;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+    float:left;
+    background-color: #1f2d3d !important;
+}
+
+#loginUserProfile {
+    width: 100%;
+    height: 50px;
+}
+
+#userProfilePic {
+    width: 50px;
+    height: 50px;
+    border-radius: 360px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#loginUserInfo {
+    width: calc(100% - 50px);
+    height: 100%;
+    color: white;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 18px;
+}
+
+#role{
+    color: #05ff05;
+}
+
+#mainContent{
+    height: calc(100vh - 60px);
+    overflow: auto;
+}
+
+/*============= sidebar menue style ============ */
+.menu {
+    background-color: #1f2d3d;
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.menu .nav-item {
+    margin: 0;
+}
+
+.menu .nav-link {
+    color: #c0c8d1;
+    font-size: 15px;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.menu .nav-link i {
+    margin-right: 10px;
+    min-width: 25px;
+    /* Ensure consistent spacing */
+    text-align: center;
+}
+
+.menu .nav-link:hover {
+    color: #ffffff;
+    background-color: #2d3b4f;
+}
+
+.menu .nav-link.active {
+    color: #ffffff;
+    background-color: #007bff;
+}
+
+.menu .nav-link .badge {
+    margin-left: auto;
+    background-color: #e74c3c;
+    color: white;
+}
+
+.menu .collapse.show {
+    background-color: #2d3b4f;
+}
+
+.menu .collapse .nav-link {
+    padding-left: 40px;
+}
+
+.dropdown-toggle::after {
+    display: none !important;
+    /* Hide default caret */
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+
+
+
+
+
+
+
+/* media query  */
+
+/* 
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+
+    /* CSS */
+
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+
+    /* CSS */
+
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    /* CSS */
+
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+    /* CSS */
+
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+    /* CSS */
+
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+    #navBarRightSideContent {
+            width: 50px;
+        }
+
+}
+  

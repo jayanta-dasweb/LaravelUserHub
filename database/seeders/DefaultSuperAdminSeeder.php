@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -27,10 +26,25 @@ class DefaultSuperAdminSeeder extends Seeder
 
         // Create default permissions
         $permissions = [
+            'view new users',
+            'assign role',
             'create user',
-            'view user',
+            'view users',
             'edit user',
             'delete user',
+            'create permission',
+            'view permissions',
+            'edit permission',
+            'delete permission',
+            'create role',
+            'view roles',
+            'edit role',
+            'delete role',
+            'assign permissions',
+            'upload excel',
+            'view excel files',
+            'edit excel file',
+            'delete excel file',
         ];
 
         foreach ($permissions as $permission) {

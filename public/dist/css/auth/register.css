@@ -1,0 +1,15 @@
+#password-hide-and-show-addon {
+    cursor: pointer;
+}
+
+#confirm-password-hide-and-show-addon {
+    cursor: pointer;
+}
+
+#link {
+    text-decoration: none;
+}
+
+#requiredField{
+    color: red;
+}
