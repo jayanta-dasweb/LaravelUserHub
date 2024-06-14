@@ -13,9 +13,9 @@
             <!-- New User (with counter) -->
             @if (Auth::user()->can('view new users'))
                 <li class="nav-item">
-                    <a class="nav-link" href="/new-user-notifications">
-                        <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;New User <span
-                            class="badge badge-primary" id="usersWithoutRolesCount">0</span>
+                    <a class="nav-link" href="{{ route('dashboard.user.view.new') }}">
+                        <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;New User <span class="badge badge-primary"
+                            id="usersWithoutRolesCount">0</span>
                     </a>
                 </li>
             @endif
@@ -26,12 +26,13 @@
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
                         <i class="fa-solid fa-users"></i>&nbsp;&nbsp;User Management <i
-                            class="fa-solid fa-chevron-right ml-auto"></i>
+                            class="fa-solid {{ Route::currentRouteName() === 'dashboard.user.view' ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
                     </a>
-                    <ul class="collapse list-unstyled" id="userManagementSubmenu">
+                    <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.user.view' ? 'show fw-bold' : '' }}"
+                        id="userManagementSubmenu">
                         @can('view users')
                             <li class="nav-item">
-                                <a class="nav-link" href="/view-all-users">View All Users</a>
+                                <a class="nav-link {{ Route::currentRouteName() === 'dashboard.user.view' ? 'fw-bold text-white' : '' }}" href="{{ route('dashboard.user.view') }}">View All Users</a>
                             </li>
                         @endcan
                     </ul>

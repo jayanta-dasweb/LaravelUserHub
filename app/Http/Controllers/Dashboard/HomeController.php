@@ -14,10 +14,7 @@ class HomeController extends Controller
 
         $permissions = [
             'view new users' => 'dashboard.user.view.new',
-            'create user' => 'dashboard.user.create',
             'view users' => 'dashboard.user.view',
-            'create permission' => 'dashboard.permission.create',
-            'view permissions' => 'dashboard.permission.view',
             'create role' => 'dashboard.role.create',
             'view roles' => 'dashboard.role.view',
             'upload excel' => 'dashboard.excel.create',
