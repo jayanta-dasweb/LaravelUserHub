@@ -2,6 +2,7 @@
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 
 
 Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
@@ -13,8 +14,11 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
             Route::get('', 'index')->name('home');
         });
 
+        Route::get('/role/{role}/permissions', [RoleController::class, 'getRolePermissions'])->name('role.permissions');
+        Route::get('/permissions', [RoleController::class, 'getPermissions'])->name('permissions.list');
+
         /* =================== NEW USERS ROUTES =======================*/ 
-        Route::group(['middleware' => ['can:view new users']], function () {
+        Route::group(['middleware' => ['can:view new user']], function () {
             Route::get('/new/users', [UserController::class, 'index'])->name('user.view.new');
             Route::get('/new/users/count', [UserController::class, 'countUsersWithoutRoles'])->name('user.count');
         });
@@ -34,7 +38,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         });
 
         /* =================== USERS ROUTES =======================*/
-        Route::group(['middleware' => ['can:view users']], function () {
+        Route::group(['middleware' => ['can:view user']], function () {
             Route::get('/users', [UserController::class, 'loadUserView'])->name('user.view');
         });
 
@@ -47,7 +51,24 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::group(['middleware' => ['can:delete user']], function () {
             Route::delete('/user/delete/{id}', [UserController::class, 'destroyUserData'])->name('user.delete');
         });
-        
+
+
+        /* =================== ROLES ROUTES =======================*/
+        Route::group(['middleware' => ['can:create role']], function () {
+            Route::get('/role/create', [RoleController::class, 'loadCreateView'])->name('role.create.view');
+            Route::post('/role/create', [RoleController::class, 'store'])->name('role.store');
+        });
+
+        Route::group(['middleware' => ['can:view role']], function () {
+            Route::get('/roles', [RoleController::class, 'index'])->name('role.show.view');
+        });
+
+        Route::group(['middleware' => ['can:view role']], function () {
+            Route::get('/role/edit/{id}', [RoleController::class, 'getRoleDetails'])->name('role.get.details');
+            Route::post('/role/edit/{id}', [RoleController::class, 'updateRole'])->name('role.edit');
+        });
+
+
 
     });
 

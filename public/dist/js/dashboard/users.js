@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    var table = new DataTable('#dataTable');
+    var table = new DataTable('#dataTable', {
+        responsive: true
+    });
 
     // Set up AJAX to include CSRF token
     $.ajaxSetup({
@@ -10,6 +12,7 @@ $(document).ready(function () {
 
     $(".edit-user").click(function (e) {
         e.preventDefault();
+        loadPermissions();
         const userId = $(this).data('id');
         $('#loaderBox').css("display", "flex");
 
@@ -36,6 +39,7 @@ $(document).ready(function () {
                             dropdownParent: $('#editDataModal'),
                             width: '100%'
                         });
+                        $('#roleSelect').trigger('change');
                         $('#loaderBox').css("display", "none");
 
                         const myModal = new bootstrap.Modal(document.getElementById('editDataModal'));
@@ -141,4 +145,6 @@ $(document).ready(function () {
 
         return isValid;
     }
+
+    
 });

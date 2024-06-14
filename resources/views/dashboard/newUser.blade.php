@@ -109,10 +109,22 @@
                     <form method="POST" action="" id="assignRoleForm">
                         @csrf
                         <div class="mb-3">
-                            <label for="roleSelect" class="form-label">Select Role<span id="requiredField">*</span></label><br>
+                            <label for="roleSelect" class="form-label">Select Role<span
+                                    id="requiredField">*</span></label><br>
                             <select class="form-select w-100" id="roleSelect" name="role">
-                                
+
                             </select>
+                            <table class="table table-bordered mt-3">
+                                <thead>
+                                    <tr>
+                                        <th>Permission Groups</th>
+                                        <th>Permissions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="permissionsTableForRoleSelect">
+                                    <!-- Permissions will be loaded here dynamically -->
+                                </tbody>
+                            </table>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>

@@ -11,7 +11,7 @@
     <nav class="menu">
         <ul class="nav flex-column">
             <!-- New User (with counter) -->
-            @if (Auth::user()->can('view new users'))
+            @if (Auth::user()->can('view new user'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard.user.view.new') }}">
                         <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;New User <span class="badge badge-primary"
@@ -21,16 +21,16 @@
             @endif
 
             <!-- User Management -->
-            @if (Auth::user()->can('create user') || Auth::user()->can('view users'))
+            @if (Auth::user()->can('create user') || Auth::user()->can('view user'))
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
                         <i class="fa-solid fa-users"></i>&nbsp;&nbsp;User Management <i
                             class="fa-solid {{ Route::currentRouteName() === 'dashboard.user.view' ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
                     </a>
-                    <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.user.view' ? 'show fw-bold' : '' }}"
+                    <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.user.view' ? 'show' : '' }}"
                         id="userManagementSubmenu">
-                        @can('view users')
+                        @can('view user')
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() === 'dashboard.user.view' ? 'fw-bold text-white' : '' }}" href="{{ route('dashboard.user.view') }}">View All Users</a>
                             </li>
@@ -40,22 +40,22 @@
             @endif
 
             <!-- Role Management -->
-            @if (Auth::user()->can('create role') || Auth::user()->can('view roles'))
+            @if (Auth::user()->can('create role') || Auth::user()->can('view role'))
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
                         <i class="fa-solid fa-user-shield"></i>&nbsp;&nbsp;Role Management <i
-                            class="fa-solid fa-chevron-right ml-auto"></i>
+                            class="fa-solid fa-chevron-right {{ ((Route::currentRouteName() === 'dashboard.role.create.view') || (Route::currentRouteName() === 'dashboard.role.show.view'))  ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
                     </a>
-                    <ul class="collapse list-unstyled" id="roleManagementSubmenu">
+                    <ul class="collapse list-unstyled {{ ((Route::currentRouteName() === 'dashboard.role.create.view') || (Route::currentRouteName() === 'dashboard.role.show.view')) ? 'show' : '' }}" id="roleManagementSubmenu">
                         @can('create role')
                             <li class="nav-item">
-                                <a class="nav-link" href="/create-role">Create Role</a>
+                                <a class="nav-link {{ Route::currentRouteName() === 'dashboard.role.create.view' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.role.create.view')}}">Create Role</a>
                             </li>
                         @endcan
-                        @can('view roles')
+                        @can('view role')
                             <li class="nav-item">
-                                <a class="nav-link" href="/view-all-roles">View All Roles</a>
+                                <a class="nav-link {{ Route::currentRouteName() === 'dashboard.role.show.view' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.role.show.view')}}" >View All Roles</a>
                             </li>
                         @endcan
                     </ul>
@@ -63,7 +63,7 @@
             @endif
 
             <!-- Excel File Management -->
-            @if (Auth::user()->can('upload excel') || Auth::user()->can('view excel files'))
+            @if (Auth::user()->can('upload excel file') || Auth::user()->can('view excel file'))
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
@@ -71,12 +71,12 @@
                             class="fa-solid fa-chevron-right ml-auto"></i>
                     </a>
                     <ul class="collapse list-unstyled" id="excelFileManagementSubmenu">
-                        @can('upload excel')
+                        @can('upload excel file')
                             <li class="nav-item">
                                 <a class="nav-link" href="/upload-excel">Upload Excel File</a>
                             </li>
                         @endcan
-                        @can('view excel files')
+                        @can('view excel file')
                             <li class="nav-item">
                                 <a class="nav-link" href="/view-all-excel-files">View All Excel Files</a>
                             </li>

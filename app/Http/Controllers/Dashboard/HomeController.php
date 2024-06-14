@@ -13,12 +13,12 @@ class HomeController extends Controller
         $user = Auth::user();
 
         $permissions = [
-            'view new users' => 'dashboard.user.view.new',
-            'view users' => 'dashboard.user.view',
+            'view new user' => 'dashboard.user.view.new',
+            'view user' => 'dashboard.user.view',
             'create role' => 'dashboard.role.create',
-            'view roles' => 'dashboard.role.view',
-            'upload excel' => 'dashboard.excel.create',
-            'view excel files' => 'dashboard.excel.view',
+            'view role' => 'dashboard.role.view',
+            'upload excel file' => 'dashboard.excel.create',
+            'view excel file' => 'dashboard.excel.view',
         ];
 
         foreach ($permissions as $permission => $route) {

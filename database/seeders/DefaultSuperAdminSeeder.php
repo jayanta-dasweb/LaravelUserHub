@@ -27,19 +27,18 @@ class DefaultSuperAdminSeeder extends Seeder
 
         // Create default permissions
         $permissions = [
-            'view new users',
+            'view new user',
             'edit new user',
             'delete new user',
             'assign role',
-            'view users',
+            'view user',
             'edit user',
             'delete user',
             'create role',
-            'view roles',
+            'view role',
             'edit role',
-            'assign permissions',
-            'upload excel',
-            'view excel files',
+            'upload excel file',
+            'view excel file',
             'edit excel file',
             'delete excel file',
         ];
@@ -56,11 +55,11 @@ class DefaultSuperAdminSeeder extends Seeder
 
         // Define dummy roles and their permissions
         $dummyRoles = [
-            'role1' => ['view new users', 'edit new user', 'view users', 'edit user'],
-            'role2' => ['view new users', 'view users', 'delete user'],
-            'role3' => ['view users', 'edit user', 'delete user', 'view excel files'],
-            'role4' => ['view users', 'upload excel', 'view excel files', 'edit excel file'],
-            'role5' => ['view excel files', 'delete excel file']
+            'role1' => ['view new user', 'edit new user', 'view user', 'edit user'],
+            'role2' => ['view new user', 'view user', 'delete user'],
+            'role3' => ['view user', 'edit user', 'delete user', 'view excel file'],
+            'role4' => ['view user', 'upload excel file', 'view excel file', 'edit excel file'],
+            'role5' => ['view excel file', 'delete excel file']
         ];
 
         foreach ($dummyRoles as $roleName => $rolePermissions) {

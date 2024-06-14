@@ -16,7 +16,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        @if (Auth::user()->can('edit new user') || Auth::user()->can('delete new user') )
+                        @if (Auth::user()->can('edit user') || Auth::user()->can('delete user') )
                             <th>Action</th>
                         @endif
                     </tr>
@@ -27,17 +27,17 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->roles->pluck('name')->join(', ') }}</td>
-                            @if (Auth::user()->can('edit new user') || Auth::user()->can('delete new user') || Auth::user()->can('assign role'))
+                            @if (Auth::user()->can('edit user') || Auth::user()->can('delete user'))
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        @can('edit new user')
+                                        @can('edit user')
                                             <button type="button" class="btn btn-sm btn-warning edit-user"
                                                 data-id="{{ $user->id }}">
                                                 Edit
                                             </button>
                                         @endcan
 
-                                        @can('delete new user')
+                                        @can('delete user')
                                             <button type="button" class="btn btn-sm btn-danger delete-user"
                                                 data-id="{{ $user->id }}">
                                                 Delete
@@ -55,7 +55,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
-                        @if (Auth::user()->can('edit new user') || Auth::user()->can('delete new user') )
+                        @if (Auth::user()->can('edit user') || Auth::user()->can('delete user') )
                             <th>Action</th>
                         @endif
                     </tr>
@@ -88,6 +88,17 @@
                             <select class="form-select w-100" id="roleSelect" name="role">
                             </select>
                         </div>
+                        <table class="table table-bordered mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Permission Groups</th>
+                                    <th>Permissions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="permissionsTableForRoleSelect">
+                                <!-- Permissions will be loaded here dynamically -->
+                            </tbody>
+                        </table>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>

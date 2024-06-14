@@ -1,5 +1,7 @@
 $(document).ready(function () {
-    var table = new DataTable('#dataTable');
+    var table = new DataTable('#dataTable', {
+        responsive: true
+    });
 
     // Set up AJAX to include CSRF token
     $.ajaxSetup({
@@ -35,6 +37,7 @@ $(document).ready(function () {
     //get all roles
     $(".assign-role").click(function (e) {
         e.preventDefault();
+        loadPermissions();
         const userId = $(this).data('id');
         $('#loaderBox').css("display", "flex");
 
@@ -187,4 +190,7 @@ $(document).ready(function () {
             }
         });
     });
+
+
+    
 });

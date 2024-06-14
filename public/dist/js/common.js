@@ -1,5 +1,6 @@
 $(window).on('load', function () {
     $('#loaderBox').css("display", "none");
+    loadPermissions();
 
     // Function to fetch count of users without roles
     function fetchUsersWithoutRolesCount() {
@@ -105,7 +106,7 @@ $(window).on('load', function () {
                     alert('Logout failed, please try again.');
                 }
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 alert('An error occurred while logging out.');
             }
         });
@@ -133,4 +134,137 @@ $(window).on('load', function () {
         $(this).prev('.dropdown-toggle').find('.fa-chevron-right').removeClass('fa-chevron-right').addClass('fa-chevron-down');
     });
 
+
+   
+    // Handle role selection change event
+    $('#roleSelect').change(function () {
+        let roleId = $(this).val();
+        if (roleId) {
+            $.ajax({
+                url: '/dashboard/role/' + roleId + '/permissions',
+                method: 'GET',
+                success: function (assignedPermissions) {
+                    $('input[name="permissionId[]"]').each(function () {
+                        $(this).prop('checked', assignedPermissions.includes(parseInt($(this).val())));
+                    });
+                },
+                error: function (error) {
+                    console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to load permissions for the selected role.'
+                    });
+                }
+            });
+        }
+    });
+
+   
+
 });
+
+
+// Load permissions on page load
+function loadPermissions() {
+    // Load permissions on page load
+    $.ajax({
+        url: '/dashboard/permissions',
+        method: 'GET',
+        success: function (data) {
+            let tableBody = $('#permissionsTableForRoleSelect');
+            tableBody.empty();
+
+            // Handle custom arrangement for "New User" group
+            let newUserPermissions = [];
+            let rolePermissions = [];
+            let assignRolePermission;
+
+            $.each(data, function (group, permissions) {
+                let displayGroup = capitalizeFirstLetter(group);
+
+                // Replace group names with custom names
+                if (group.toLowerCase() === 'user') {
+                    displayGroup = 'User Management';
+                } else if (group.toLowerCase() === 'excel') {
+                    displayGroup = 'Excel File Management';
+                } else if (group.toLowerCase() === 'role') {
+                    displayGroup = 'Role Management';
+                }
+
+                if (group.toLowerCase() === 'new') {
+                    newUserPermissions = permissions;
+                } else if (group.toLowerCase() === 'role') {
+                    rolePermissions = permissions.filter(permission => {
+                        if (permission.name.includes('assign role')) {
+                            assignRolePermission = permission;
+                            return false;
+                        }
+                        return true;
+                    });
+                } else {
+                    let row = '<tr><td>' + displayGroup + '</td><td>';
+                    $.each(permissions, function (index, permission) {
+                        let shortName = getShortPermissionName(permission.name);
+                        row += '<div class="form-check form-check-inline">';
+                        row += '<input class="form-check-input" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" disabled readonly>';
+                        row += '<label class="form-check-label" for="permission' + permission.id + '">' + shortName + '</label>';
+                        row += '</div>';
+                    });
+                    row += '</td></tr>';
+                    tableBody.append(row);
+                }
+            });
+
+            // Append "New User" group with "Assign Role" permission
+            if (newUserPermissions.length > 0) {
+                let row = '<tr><td>New User</td><td>';
+                $.each(newUserPermissions, function (index, permission) {
+                    let shortName = getShortPermissionName(permission.name);
+                    row += '<div class="form-check form-check-inline">';
+                    row += '<input class="form-check-input" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" disabled readonly>';
+                    row += '<label class="form-check-label" for="permission' + permission.id + '">' + shortName + '</label>';
+                    row += '</div>';
+                });
+                if (assignRolePermission) {
+                    let shortName = getShortPermissionName(assignRolePermission.name);
+                    row += '<div class="form-check form-check-inline">';
+                    row += '<input class="form-check-input" type="checkbox" id="permission' + assignRolePermission.id + '" value="' + assignRolePermission.id + '" name="permissionId[]" disabled readonly>';
+                    row += '<label class="form-check-label" for="permission' + assignRolePermission.id + '">Assign Role</label>';
+                    row += '</div>';
+                }
+                row += '</td></tr>';
+                tableBody.append(row);
+            }
+
+            // Append "Role Management" group without "Assign Role" permission
+            if (rolePermissions.length > 0) {
+                let row = '<tr><td>Role Management</td><td>';
+                $.each(rolePermissions, function (index, permission) {
+                    let shortName = getShortPermissionName(permission.name);
+                    row += '<div class="form-check form-check-inline">';
+                    row += '<input class="form-check-input" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" disabled readonly>';
+                    row += '<label class="form-check-label" for="permission' + permission.id + '">' + shortName + '</label>';
+                    row += '</div>';
+                });
+                row += '</td></tr>';
+                tableBody.append(row);
+            }
+        }
+    });
+
+}
+
+
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getShortPermissionName(permission) {
+    let parts = permission.split(' ');
+    if (parts.length > 1) {
+        return capitalizeFirstLetter(parts[0]);
+    }
+    return permission;
+}
