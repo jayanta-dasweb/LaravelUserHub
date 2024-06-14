@@ -5,7 +5,7 @@
 @section('custom-css', 'dashboard/home.css')
 
 @section('content')
-  
+  {{-- main content gose here  --}}
 @endsection
 
 

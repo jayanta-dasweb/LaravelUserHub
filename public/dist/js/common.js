@@ -1,6 +1,26 @@
 $(window).on('load', function () {
     $('#loaderBox').css("display", "none");
 
+    // Function to fetch count of users without roles
+    function fetchUsersWithoutRolesCount() {
+        $.ajax({
+            url: '/dashboard/new/users/count',
+            type: 'GET',
+            success: function (response) {
+                $('#usersWithoutRolesCount').text(response.count);
+            },
+            error: function (xhr) {
+                console.error('Error fetching users without roles count:', xhr);
+            }
+        });
+    }
+
+    // Fetch the count initially
+    fetchUsersWithoutRolesCount();
+
+    // Set interval to fetch the count every 30 seconds
+    setInterval(fetchUsersWithoutRolesCount, 30000);
+
 
     function toggleSidebar() {
         var sidebarVisible = $('#sideBarMenue').hasClass('visible');

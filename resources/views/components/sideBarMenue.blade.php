@@ -15,7 +15,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/new-user-notifications">
                         <i class="fa-solid fa-user-plus"></i>&nbsp;&nbsp;New User <span
-                            class="badge badge-primary">5</span>
+                            class="badge badge-primary" id="usersWithoutRolesCount">0</span>
                     </a>
                 </li>
             @endif
@@ -29,37 +29,9 @@
                             class="fa-solid fa-chevron-right ml-auto"></i>
                     </a>
                     <ul class="collapse list-unstyled" id="userManagementSubmenu">
-                        @can('create user')
-                            <li class="nav-item">
-                                <a class="nav-link" href="/create-user">Create User</a>
-                            </li>
-                        @endcan
                         @can('view users')
                             <li class="nav-item">
                                 <a class="nav-link" href="/view-all-users">View All Users</a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
-            @endif
-
-            <!-- Permission Management -->
-            @if (Auth::user()->can('create permission') || Auth::user()->can('view permissions'))
-                <li class="nav-item">
-                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
-                        aria-expanded="false">
-                        <i class="fa-solid fa-key"></i>&nbsp;&nbsp;Permission Management <i
-                            class="fa-solid fa-chevron-right ml-auto"></i>
-                    </a>
-                    <ul class="collapse list-unstyled" id="permissionManagementSubmenu">
-                        @can('create permission')
-                            <li class="nav-item">
-                                <a class="nav-link" href="/create-permission">Create Permission</a>
-                            </li>
-                        @endcan
-                        @can('view permissions')
-                            <li class="nav-item">
-                                <a class="nav-link" href="/view-all-permissions">View All Permissions</a>
                             </li>
                         @endcan
                     </ul>

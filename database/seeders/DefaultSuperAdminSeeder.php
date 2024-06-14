@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Hash;
 
 class DefaultSuperAdminSeeder extends Seeder
 {
@@ -27,19 +28,15 @@ class DefaultSuperAdminSeeder extends Seeder
         // Create default permissions
         $permissions = [
             'view new users',
+            'edit new user',
+            'delete new user',
             'assign role',
-            'create user',
             'view users',
             'edit user',
             'delete user',
-            'create permission',
-            'view permissions',
-            'edit permission',
-            'delete permission',
             'create role',
             'view roles',
             'edit role',
-            'delete role',
             'assign permissions',
             'upload excel',
             'view excel files',
@@ -56,5 +53,30 @@ class DefaultSuperAdminSeeder extends Seeder
 
         // Assign the "super admin" role to the user
         $user->assignRole($role);
+
+        // Define dummy roles and their permissions
+        $dummyRoles = [
+            'role1' => ['view new users', 'edit new user', 'view users', 'edit user'],
+            'role2' => ['view new users', 'view users', 'delete user'],
+            'role3' => ['view users', 'edit user', 'delete user', 'view excel files'],
+            'role4' => ['view users', 'upload excel', 'view excel files', 'edit excel file'],
+            'role5' => ['view excel files', 'delete excel file']
+        ];
+
+        foreach ($dummyRoles as $roleName => $rolePermissions) {
+            $role = Role::create(['name' => $roleName]);
+
+            // Assign the permissions to the role directly
+            $role->syncPermissions($rolePermissions);
+        }
+
+        // Create 500 users without any roles
+        for ($i = 1; $i <= 500; $i++) {
+            User::create([
+                'name' => "Test User $i",
+                'email' => "test$i@gmail.com",
+                'password' => Hash::make('123456789'),
+            ]);
+        }
     }
 }
