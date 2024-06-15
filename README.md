@@ -1,66 +1,118 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Introduction
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This Laravel project is built with Laravel 10 and incorporates various libraries and packages to enhance functionality. The main technologies used include jQuery, Select2, SweetAlert2, DataTables, Spatie for role management, Swagger for API documentation, Bootstrap 5, and PhpSpreadsheet for reading Excel files.
 
-## About Laravel
+## Prerequisites
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.1 or higher
+- Composer 2.2.0 or higher
+- PostgreSQL
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd <repository_directory>
+    ```
 
-## Learning Laravel
+2. **Install dependencies:**
+    ```bash
+    composer install
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. **Copy the example environment file and configure your environment:**
+    ```bash
+    cp .env.example .env
+    ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. **Generate an application key:**
+    ```bash
+    php artisan key:generate
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. **Configure your database settings in the `.env` file:**
+    ```
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=nic_assessment_db
+    DB_USERNAME=your_database_username
+    DB_PASSWORD=your_database_password
+    ```
 
-## Laravel Sponsors
+6. **Run database migrations and seed the database:**
+    ```bash
+    php artisan migrate --seed
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Super Admin Credentials
 
-### Premium Partners
+- **Email:** jayantadas.dev@gmail.com
+- **Password:** 123456789
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Main Functionalities
 
-## Contributing
+- **User Registration and Login:** Users can register and log in. If a user does not have any assigned roles, a Bootstrap alert will notify them.
+- **Role Management:** The super admin can assign roles to users, create new roles, and assign permissions to roles.
+- **User Management:** The super admin can view users without roles, assign roles, and manage user details.
+- **Bulk User Data Import:** Users can upload Excel files (.xls, .xlsx, or .csv) to import user data in bulk. The system will validate the data and provide feedback on any issues.
+- **Open REST API:** Two APIs are available for fetching user details and roles. API documentation can be accessed at [http://127.0.0.1:8000/api/documentation](http://127.0.0.1:8000/api/documentation).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Process Flow
 
-## Code of Conduct
+1. **User Registration:**
+    - Users can register themselves.
+    - After registration, users can log in using their email and password.
+    - If the user does not have an assigned role, a Bootstrap alert will be displayed.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **Super Admin Management:**
+    - Log in using super admin credentials.
+    - Access the "New User" sidebar menu to view users without roles.
+    - Assign roles to users from this page. Once a role is assigned, the user will move to the "All Users" page.
 
-## Security Vulnerabilities
+3. **Roles Management:**
+    - Create new roles and assign permissions.
+    - Manage existing roles and permissions.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Bulk User Data Import:**
+    - Upload Excel files to import user data.
+    - The system will validate the data, remove any rows with issues, and provide a detailed alert with the reasons for removal.
+    - Update or remove data before final submission.
+    - Import bulk user data with roles.
 
-## License
+5. **Open REST API:**
+    - Two APIs are available:
+        - **Get all user details, roles, and permissions.**
+        - **Get specific user details with role and permissions.**
+    - Use the Swagger documentation to try the APIs: [http://127.0.0.1:8000/api/documentation](http://127.0.0.1:8000/api/documentation).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Necessary Commands
+
+- **Run the application:**
+    ```bash
+    php artisan serve
+    ```
+
+- **Migrate the database:**
+    ```bash
+    php artisan migrate
+    ```
+
+- **Seed the database:**
+    ```bash
+    php artisan db:seed
+    ```
+
+## Additional Information
+
+- **Libraries and Packages Used:**
+    - Laravel 10
+    - jQuery
+    - Select2
+    - SweetAlert2
+    - DataTables
+    - Spatie for role management
+    - Swagger for API documentation
+    - Bootstrap 5
+    - PhpSpreadsheet for reading Excel files
