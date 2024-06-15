@@ -1,6 +1,6 @@
 ## Introduction
 
-This Laravel project is built with Laravel 10 and incorporates various libraries and packages to enhance functionality. The main technologies used include jQuery, Select2, SweetAlert2, DataTables, Spatie for role management, Swagger for API documentation, Bootstrap 5, and PhpSpreadsheet for reading Excel files.
+This project is built with Laravel 10 and incorporates various libraries and packages to enhance functionality. The main technologies used include jQuery, Select2, SweetAlert2, DataTables, Spatie for role management, Swagger for API documentation, Bootstrap 5, and PhpSpreadsheet for reading Excel files.
 
 ## Prerequisites
 
