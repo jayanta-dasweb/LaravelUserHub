@@ -62,23 +62,18 @@
                 </li>
             @endif
 
-            <!-- Excel File Management -->
-            @if (Auth::user()->can('upload excel file') || Auth::user()->can('view excel file'))
+            <!-- Import data -->
+            @if (Auth::user()->can('create users bulk data'))
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
-                        <i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Excel File Management <i
-                            class="fa-solid fa-chevron-right ml-auto"></i>
+                        <i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Import Bulk Data <i
+                            class="fa-solid  {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
                     </a>
-                    <ul class="collapse list-unstyled" id="excelFileManagementSubmenu">
-                        @can('upload excel file')
+                    <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'show' : '' }}" id="excelFileManagementSubmenu">
+                        @can('create users bulk data')
                             <li class="nav-item">
-                                <a class="nav-link" href="/upload-excel">Upload Excel File</a>
-                            </li>
-                        @endcan
-                        @can('view excel file')
-                            <li class="nav-item">
-                                <a class="nav-link" href="/view-all-excel-files">View All Excel Files</a>
+                                <a class="nav-link{{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.import.users.show')}}">Import Bulk Users Data</a>
                             </li>
                         @endcan
                     </ul>

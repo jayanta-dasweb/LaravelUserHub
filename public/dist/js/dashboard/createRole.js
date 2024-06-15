@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    permissionsTable
     $('#loaderBox').css("display", "flex");
 
     // Load permissions on page load
@@ -20,8 +21,8 @@ $(document).ready(function () {
                 // Replace group names with custom names
                 if (group.toLowerCase() === 'user') {
                     displayGroup = 'User Management';
-                } else if (group.toLowerCase() === 'excel') {
-                    displayGroup = 'Excel File Management';
+                } else if (group.toLowerCase() === 'users') {
+                    displayGroup = 'Import Bulk Users Data';
                 } else if (group.toLowerCase() === 'role') {
                     displayGroup = 'Role Management';
                 }

@@ -56,8 +56,8 @@ $(document).ready(function () {
 
                     if (group.toLowerCase() === 'user') {
                         displayGroup = 'User Management';
-                    } else if (group.toLowerCase() === 'excel') {
-                        displayGroup = 'Excel File Management';
+                    } else if (group.toLowerCase() === 'users') {
+                        displayGroup = 'Import Bulk Users Data';
                     } else if (group.toLowerCase() === 'role') {
                         displayGroup = 'Role Management';
                     } else if (group.toLowerCase() === 'new') {

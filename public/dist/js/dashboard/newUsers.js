@@ -42,7 +42,7 @@ $(document).ready(function () {
         $('#loaderBox').css("display", "flex");
 
         $.ajax({
-            url: `/dashboard/roles`,
+            url: `/dashboard/roles/list`,
             type: 'GET',
             success: function (roles) {
                 console.log(roles)

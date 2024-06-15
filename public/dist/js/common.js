@@ -167,7 +167,6 @@ $(window).on('load', function () {
 
 // Load permissions on page load
 function loadPermissions() {
-    // Load permissions on page load
     $.ajax({
         url: '/dashboard/permissions',
         method: 'GET',
@@ -186,8 +185,8 @@ function loadPermissions() {
                 // Replace group names with custom names
                 if (group.toLowerCase() === 'user') {
                     displayGroup = 'User Management';
-                } else if (group.toLowerCase() === 'excel') {
-                    displayGroup = 'Excel File Management';
+                } else if (group.toLowerCase() === 'users') {
+                    displayGroup = 'Import Bulk Users Data';
                 } else if (group.toLowerCase() === 'role') {
                     displayGroup = 'Role Management';
                 }
@@ -207,7 +206,7 @@ function loadPermissions() {
                     $.each(permissions, function (index, permission) {
                         let shortName = getShortPermissionName(permission.name);
                         row += '<div class="form-check form-check-inline">';
-                        row += '<input class="form-check-input" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" disabled readonly>';
+                        row += '<input class="form-check-input permission-checkbox" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" data-group="' + displayGroup + '" data-permission="' + shortName.toLowerCase() + '" disabled>';
                         row += '<label class="form-check-label" for="permission' + permission.id + '">' + shortName + '</label>';
                         row += '</div>';
                     });
@@ -222,14 +221,14 @@ function loadPermissions() {
                 $.each(newUserPermissions, function (index, permission) {
                     let shortName = getShortPermissionName(permission.name);
                     row += '<div class="form-check form-check-inline">';
-                    row += '<input class="form-check-input" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" disabled readonly>';
+                    row += '<input class="form-check-input permission-checkbox" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" data-group="New User" data-permission="' + shortName.toLowerCase() + '" disabled>';
                     row += '<label class="form-check-label" for="permission' + permission.id + '">' + shortName + '</label>';
                     row += '</div>';
                 });
                 if (assignRolePermission) {
                     let shortName = getShortPermissionName(assignRolePermission.name);
                     row += '<div class="form-check form-check-inline">';
-                    row += '<input class="form-check-input" type="checkbox" id="permission' + assignRolePermission.id + '" value="' + assignRolePermission.id + '" name="permissionId[]" disabled readonly>';
+                    row += '<input class="form-check-input permission-checkbox" type="checkbox" id="permission' + assignRolePermission.id + '" value="' + assignRolePermission.id + '" name="permissionId[]" data-group="New User" data-permission="assign role" disabled>';
                     row += '<label class="form-check-label" for="permission' + assignRolePermission.id + '">Assign Role</label>';
                     row += '</div>';
                 }
@@ -243,19 +242,38 @@ function loadPermissions() {
                 $.each(rolePermissions, function (index, permission) {
                     let shortName = getShortPermissionName(permission.name);
                     row += '<div class="form-check form-check-inline">';
-                    row += '<input class="form-check-input" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" disabled readonly>';
+                    row += '<input class="form-check-input permission-checkbox" type="checkbox" id="permission' + permission.id + '" value="' + permission.id + '" name="permissionId[]" data-group="Role Management" data-permission="' + shortName.toLowerCase() + '" disabled>';
                     row += '<label class="form-check-label" for="permission' + permission.id + '">' + shortName + '</label>';
                     row += '</div>';
                 });
                 row += '</td></tr>';
                 tableBody.append(row);
             }
+
+            // Add event listener for permission checkboxes
+            $('.permission-checkbox').change(function () {
+                let group = $(this).data('group');
+                let permission = $(this).data('permission');
+
+                if (permission === 'edit' || permission === 'delete' || permission === 'assign role') {
+                    if ($(this).is(':checked')) {
+                        // Automatically check the 'view' permission
+                        $(`.permission-checkbox[data-group="${group}"][data-permission="view"]`).prop('checked', true);
+                    } else {
+                        // Automatically uncheck the 'view' permission if 'edit' or 'delete' or 'assign role' is unchecked
+                        let otherPermissionsChecked = $(`.permission-checkbox[data-group="${group}"][data-permission="edit"]:checked`).length > 0 ||
+                            $(`.permission-checkbox[data-group="${group}"][data-permission="delete"]:checked`).length > 0 ||
+                            $(`.permission-checkbox[data-group="${group}"][data-permission="assign role"]:checked`).length > 0;
+                        if (!otherPermissionsChecked) {
+                            $(`.permission-checkbox[data-group="${group}"][data-permission="view"]`).prop('checked', false);
+                        }
+                    }
+                }
+            });
+            $('#loaderBox').css("display", "none");
         }
     });
-
 }
-
-
 
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -268,3 +286,5 @@ function getShortPermissionName(permission) {
     }
     return permission;
 }
+
+

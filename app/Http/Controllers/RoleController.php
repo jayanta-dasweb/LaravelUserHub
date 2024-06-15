@@ -73,7 +73,7 @@ class RoleController extends Controller
     public function getPermissions()
     {
         $permissions = Permission::all()->groupBy(function ($item) {
-            return explode(' ', $item->name)[1]; // Group by module name
+            return explode(' ', $item->name)[1]; 
         });
 
         return response()->json($permissions);

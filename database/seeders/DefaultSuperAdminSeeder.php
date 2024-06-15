@@ -37,10 +37,7 @@ class DefaultSuperAdminSeeder extends Seeder
             'create role',
             'view role',
             'edit role',
-            'upload excel file',
-            'view excel file',
-            'edit excel file',
-            'delete excel file',
+            'create users bulk data',
         ];
 
         foreach ($permissions as $permission) {
@@ -57,9 +54,9 @@ class DefaultSuperAdminSeeder extends Seeder
         $dummyRoles = [
             'role1' => ['view new user', 'edit new user', 'view user', 'edit user'],
             'role2' => ['view new user', 'view user', 'delete user'],
-            'role3' => ['view user', 'edit user', 'delete user', 'view excel file'],
-            'role4' => ['view user', 'upload excel file', 'view excel file', 'edit excel file'],
-            'role5' => ['view excel file', 'delete excel file']
+            'role3' => ['view user', 'edit user', 'delete user', 'create users bulk data'],
+            'role4' => ['view user', 'create users bulk data'],
+            'role5' => ['create users bulk data', 'view new user', 'edit new user']
         ];
 
         foreach ($dummyRoles as $roleName => $rolePermissions) {
@@ -70,7 +67,7 @@ class DefaultSuperAdminSeeder extends Seeder
         }
 
         // Create 500 users without any roles
-        for ($i = 1; $i <= 500; $i++) {
+        for ($i = 1; $i <= 50; $i++) {
             User::create([
                 'name' => "Test User $i",
                 'email' => "test$i@gmail.com",

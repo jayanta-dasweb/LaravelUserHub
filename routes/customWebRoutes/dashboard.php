@@ -3,6 +3,8 @@ use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ImportUsersDataController;
 
 
 Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
@@ -14,6 +16,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
             Route::get('', 'index')->name('home');
         });
 
+        // Route for Role View and preselect role 
         Route::get('/role/{role}/permissions', [RoleController::class, 'getRolePermissions'])->name('role.permissions');
         Route::get('/permissions', [RoleController::class, 'getPermissions'])->name('permissions.list');
 
@@ -33,7 +36,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         });
 
         Route::group(['middleware' => ['can:assign role']], function () {
-            Route::get('/roles', [UserController::class, 'getRoles'])->name('roles.list');
+            Route::get('/roles/list', [UserController::class, 'getRoles'])->name('roles.list');
             Route::post('/new/user/assign-role/{id}', [UserController::class, 'assignRole'])->name('user.new.assign.role');
         });
 
@@ -69,6 +72,26 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         });
 
 
+        /* =================== IMPORT USERS BULK DATA ROUTE =======================*/
+        Route::group(['middleware' => ['can:create users bulk data']], function () {
+            Route::get('/import/users', [ImportUsersDataController::class, 'index'])->name('import.users.show');
+            Route::post('/import/users', [ImportUsersDataController::class, 'store'])->name('import.users.store');
+        });
+
+
+        /* =================== PROFILE ROUTES =======================*/
+        Route::controller(ProfileController::class)->group(function () {
+            Route::get('/profile', 'index')->name('profile.show');
+
+            Route::get('/profile/full-name', 'getFullName')->name('profile.getFullName');
+            Route::post('/profile/full-name', 'updateFullName')->name('profile.updateFullName');
+
+            Route::get('/profile/email', 'getEmail')->name('profile.getEmail');
+            Route::post('/profile/email', 'updateEmail')->name('profile.updateEmail');
+
+            Route::post('/profile/password', 'updatePassword')->name('profile.updatePassword');
+        });
+    
 
     });
 

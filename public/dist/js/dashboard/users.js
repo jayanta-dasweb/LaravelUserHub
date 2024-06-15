@@ -27,7 +27,7 @@ $(document).ready(function () {
 
                 // Fetch roles and populate the select box
                 $.ajax({
-                    url: `/dashboard/roles`,
+                    url: `/dashboard/roles/list`,
                     type: 'GET',
                     success: function (roles) {
                         let roleOptions = '<option value="">Select a role</option>';

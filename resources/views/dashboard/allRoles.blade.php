@@ -27,25 +27,27 @@
                             <td>{{ $role->name }}</td>
                             <td>
                                 @foreach ($role->permissions->groupBy(function ($item) {
-            if (str_contains($item->name, 'new user') || str_contains($item->name, 'assign role')) {
-                return 'New User';
-            } elseif (str_contains($item->name, 'user')) {
-                return 'User Management';
-            } elseif (str_contains($item->name, 'role')) {
-                return 'Role Management';
-            } elseif (str_contains($item->name, 'excel')) {
-                return 'Excel File Management';
-            }
-            return ucfirst(explode(' ', $item->name)[1]);
-        }) as $group => $permissions)
+                                    if (str_contains($item->name, 'new user') || str_contains($item->name, 'assign role')) {
+                                        return 'New User';
+                                    } elseif (str_contains($item->name, 'user') && !str_contains($item->name, 'bulk data')) {
+                                        return 'User Management';
+                                    } elseif (str_contains($item->name, 'role')) {
+                                        return 'Role Management';
+                                    } elseif (str_contains($item->name, 'bulk data')) {
+                                        return 'Import Bulk Users Data';
+                                    }
+                                    return ucfirst(explode(' ', $item->name)[1]);
+                                }) as $group => $permissions)
                                     <strong>{{ $group }}:</strong>
                                     {{ $permissions->pluck('name')->map(function ($perm) {
-                                            $parts = explode(' ', $perm);
-                                            if (strtolower($perm) === 'assign role') {
-                                                return 'Assign Role';
-                                            }
-                                            return ucfirst($parts[0]);
-                                        })->join(', ') }}<br>
+                                        $parts = explode(' ', $perm);
+                                        if (strtolower($perm) === 'assign role') {
+                                            return 'Assign Role';
+                                        } elseif (strtolower($perm) === 'create users bulk data') {
+                                            return 'Create';
+                                        }
+                                        return ucfirst($parts[0]);
+                                    })->join(', ') }}<br>
                                 @endforeach
                             </td>
                             <td>{{ $role->created_at->format('d M Y, h:i A') }}</td>
