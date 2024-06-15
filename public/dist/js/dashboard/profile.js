@@ -71,10 +71,14 @@ $(document).ready(function () {
             method: 'POST',
             data: { name: name },
             success: function (data) {
-                Swal.fire('Success', data.success, 'success');
-                const nameModal = bootstrap.Modal.getInstance(document.getElementById('editNameModal'));
-                nameModal.hide();
-                $('#user-name').text(name);
+                Swal.fire('Success', data.success, 'success').then((result) => {
+                    if (result.isConfirmed) {
+                        const nameModal = bootstrap.Modal.getInstance(document.getElementById('editNameModal'));
+                        nameModal.hide();
+                        location.reload();
+                        $('#user-name').text(name);
+                    }
+                });
             },
             error: function (jqXHR) {
                 console.log(jqXHR);

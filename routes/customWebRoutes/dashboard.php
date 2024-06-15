@@ -76,6 +76,9 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
         Route::group(['middleware' => ['can:create users bulk data']], function () {
             Route::get('/import/users', [ImportUsersDataController::class, 'index'])->name('import.users.show');
             Route::post('/import/users', [ImportUsersDataController::class, 'store'])->name('import.users.store');
+            Route::post('/import/users/parse', [ImportUsersDataController::class, 'parseExcel'])->name('import.users.parse');
+            Route::post('/validate/import', [ImportUsersDataController::class, 'validateUserData'])->name('import.users.validate');
+
         });
 
 

@@ -73,7 +73,7 @@
                     <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'show' : '' }}" id="excelFileManagementSubmenu">
                         @can('create users bulk data')
                             <li class="nav-item">
-                                <a class="nav-link{{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.import.users.show')}}">Import Bulk Users Data</a>
+                                <a class="nav-link {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.import.users.show')}}">Import Bulk Users Data</a>
                             </li>
                         @endcan
                     </ul>
