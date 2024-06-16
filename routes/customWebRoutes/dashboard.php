@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ImportUsersDataController;
+use App\Http\Controllers\NSAPSchemeController;
 
 
 Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
@@ -78,20 +79,37 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
             Route::post('/import/users', [ImportUsersDataController::class, 'store'])->name('import.users.store');
             Route::post('/import/users/parse', [ImportUsersDataController::class, 'parseExcel'])->name('import.users.parse');
             Route::post('/validate/import', [ImportUsersDataController::class, 'validateUserData'])->name('import.users.validate');
+        });
 
+        /* =================== IMPORT USERS BULK DATA ROUTE =======================*/
+        Route::group(['middleware' => ['can:create NSAP scheme bulk data']], function () {
+            Route::get('/import/nsap-scheme', [NSAPSchemeController::class, 'index'])->name('import.nsapScheme.show');
+            Route::post('/import/nsap-scheme', [NSAPSchemeController::class, 'store'])->name('import.nsapScheme.store');
+            Route::post('/import/nsap-scheme/parse', [NSAPSchemeController::class, 'parseExcel'])->name('import.nsapScheme.parse');
+        });
+
+        Route::group(['middleware' => ['can:view NSAP scheme']], function () {
+            Route::get('/nsap-schemes', [NSAPSchemeController::class, 'loadNsapSchemeView'])->name('nsapScheme.view');
+        });
+
+        Route::group(['middleware' => ['can:edit NSAP scheme']], function () {
+            Route::get('/nsap-scheme/{id}', [NSAPSchemeController::class, 'getNsapSchemeData'])->name('nsapScheme.data');
+            Route::get('/nsap-scheme/roles', [NSAPSchemeController::class, 'getRolesForNsapScheme'])->name('roles.list.nsapScheme');
+            Route::post('/nsap-scheme/edit/{id}', [NSAPSchemeController::class, 'updateNsapSchemeData'])->name('nsapScheme.edit');
+        });
+
+        Route::group(['middleware' => ['can:delete NsapScheme']], function () {
+            Route::delete('/nsap-scheme/delete/{id}', [NSAPSchemeController::class, 'destroyNsapSchemeData'])->name('nsapScheme.delete');
         });
 
 
         /* =================== PROFILE ROUTES =======================*/
         Route::controller(ProfileController::class)->group(function () {
             Route::get('/profile', 'index')->name('profile.show');
-
             Route::get('/profile/full-name', 'getFullName')->name('profile.getFullName');
             Route::post('/profile/full-name', 'updateFullName')->name('profile.updateFullName');
-
             Route::get('/profile/email', 'getEmail')->name('profile.getEmail');
             Route::post('/profile/email', 'updateEmail')->name('profile.updateEmail');
-
             Route::post('/profile/password', 'updatePassword')->name('profile.updatePassword');
         });
     

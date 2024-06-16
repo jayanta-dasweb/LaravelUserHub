@@ -33,8 +33,10 @@
                                         return 'User Management';
                                     } elseif (str_contains($item->name, 'role')) {
                                         return 'Role Management';
-                                    } elseif (str_contains($item->name, 'bulk data')) {
+                                    } elseif (str_contains($item->name, 'users bulk data')) {
                                         return 'Import Bulk Users Data';
+                                    }elseif (str_contains($item->name, 'NSAP')) {
+                                        return 'NSAP Scheme Management';
                                     }
                                     return ucfirst(explode(' ', $item->name)[1]);
                                 }) as $group => $permissions)

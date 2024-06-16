@@ -62,6 +62,8 @@ $(document).ready(function () {
                         displayGroup = 'Role Management';
                     } else if (group.toLowerCase() === 'new') {
                         displayGroup = 'New User';
+                    } else if (group.toLowerCase() === 'nsap') {
+                        displayGroup = 'NSAP Scheme Management';
                     }
 
                     if (displayGroup === 'New User') {

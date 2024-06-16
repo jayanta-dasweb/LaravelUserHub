@@ -38,6 +38,10 @@ class DefaultSuperAdminSeeder extends Seeder
             'view role',
             'edit role',
             'create users bulk data',
+            'create NSAP scheme bulk data',
+            'edit NSAP scheme',
+            'delete NSAP scheme',
+            'view NSAP scheme',
         ];
 
         foreach ($permissions as $permission) {

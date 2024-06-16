@@ -189,6 +189,8 @@ function loadPermissions() {
                     displayGroup = 'Import Bulk Users Data';
                 } else if (group.toLowerCase() === 'role') {
                     displayGroup = 'Role Management';
+                } else if (group.toLowerCase() === 'nsap') {
+                    displayGroup = 'NSAP Scheme Management';
                 }
 
                 if (group.toLowerCase() === 'new') {

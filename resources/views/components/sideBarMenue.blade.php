@@ -21,7 +21,7 @@
             @endif
 
             <!-- User Management -->
-            @if (Auth::user()->can('create user') || Auth::user()->can('view user'))
+            @if (Auth::user()->can('view user'))
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
@@ -62,18 +62,42 @@
                 </li>
             @endif
 
+            <!-- NSAP Schemes Management -->
+            @if (Auth::user()->can('view NSAP scheme'))
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
+                        aria-expanded="false">
+                        <i class="fa-brands fa-wpforms"></i>&nbsp;&nbsp;NSAP Scheme Management <i
+                            class="fa-solid {{ Route::currentRouteName() === 'dashboard.nsapScheme.view' ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
+                    </a>
+                    <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.nsapScheme.view' ? 'show' : '' }}"
+                        id="userManagementSubmenu">
+                        @can('view NSAP scheme')
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteName() === 'dashboard.nsapScheme.view' ? 'fw-bold text-white' : '' }}" href="{{ route('dashboard.nsapScheme.view') }}">View All NSAP Schemes</a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+
             <!-- Import data -->
             @if (Auth::user()->can('create users bulk data'))
                 <li class="nav-item">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="collapse"
                         aria-expanded="false">
                         <i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Import Bulk Data <i
-                            class="fa-solid  {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
+                            class="fa-solid  {{ (Route::currentRouteName() === 'dashboard.import.users.show' || Route::currentRouteName() === 'dashboard.import.nsapScheme.show') ? 'fa-chevron-down' : 'fa-chevron-right' }} ml-auto"></i>
                     </a>
-                    <ul class="collapse list-unstyled {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'show' : '' }}" id="excelFileManagementSubmenu">
+                    <ul class="collapse list-unstyled {{ (Route::currentRouteName() === 'dashboard.import.users.show' || Route::currentRouteName() === 'dashboard.import.nsapScheme.show') ? 'show' : '' }}" id="excelFileManagementSubmenu">
                         @can('create users bulk data')
                             <li class="nav-item">
                                 <a class="nav-link {{ Route::currentRouteName() === 'dashboard.import.users.show' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.import.users.show')}}">Import Bulk Users Data</a>
+                            </li>
+                        @endcan
+                         @can('create NSAP scheme bulk data')
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteName() === 'dashboard.import.nsapScheme.show' ? 'fw-bold text-white' : '' }}" href="{{route('dashboard.import.nsapScheme.show')}}">Import Bulk NSAP Scheme Data</a>
                             </li>
                         @endcan
                     </ul>
