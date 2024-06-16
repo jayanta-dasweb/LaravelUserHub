@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var table = new DataTable('#dataTable', {
-        responsive: true
+        scrollX: true
     });
 
 

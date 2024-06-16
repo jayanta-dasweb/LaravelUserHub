@@ -81,7 +81,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
             Route::post('/validate/import', [ImportUsersDataController::class, 'validateUserData'])->name('import.users.validate');
         });
 
-        /* =================== IMPORT USERS BULK DATA ROUTE =======================*/
+        /* =================== NSAP SCHEME ROUTES =======================*/
         Route::group(['middleware' => ['can:create NSAP scheme bulk data']], function () {
             Route::get('/import/nsap-scheme', [NSAPSchemeController::class, 'index'])->name('import.nsapScheme.show');
             Route::post('/import/nsap-scheme', [NSAPSchemeController::class, 'store'])->name('import.nsapScheme.store');
@@ -98,7 +98,7 @@ Route::middleware(['auth', 'PreventBackHistory'])->group(function () {
             Route::post('/nsap-scheme/edit/{id}', [NSAPSchemeController::class, 'updateNsapSchemeData'])->name('nsapScheme.edit');
         });
 
-        Route::group(['middleware' => ['can:delete NsapScheme']], function () {
+        Route::group(['middleware' => ['can:delete NSAP scheme']], function () {
             Route::delete('/nsap-scheme/delete/{id}', [NSAPSchemeController::class, 'destroyNsapSchemeData'])->name('nsapScheme.delete');
         });
 

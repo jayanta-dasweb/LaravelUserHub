@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var table = new DataTable('#dataTable', {
-        scrollX: true
+        scrollX : true
     });
 
     // Set up AJAX to include CSRF token
@@ -10,57 +10,39 @@ $(document).ready(function () {
         }
     });
 
-    $(".edit-user").click(function (e) {
+    $(".edit-scheme").click(function (e) {
         e.preventDefault();
-        loadPermissions();
-        const userId = $(this).data('id');
+        const id = $(this).data('id');
         $('#loaderBox').css("display", "flex");
 
-        // Fetch user details
+        // Fetch NSAP scheme details
         $.ajax({
-            url: `/dashboard/user/${userId}`,
+            url: `/dashboard/nsap-scheme/${id}`,
             type: 'GET',
-            success: function (user) {
-                $('#editName').val(user.name);
-                $('#editEmail').val(user.email);
-                $('#editDataForm').attr('action', `/dashboard/user/edit/${user.id}`);
+            success: function (scheme) {
+                $('#editSchemeCode').val(scheme.scheme_code);
+                $('#editSchemeName').val(scheme.scheme_name);
+                $('#editCentralStateScheme').val(scheme.central_state_scheme);
+                $('#editFinYear').val(scheme.fin_year);
+                $('#editStateDisbursement').val(scheme.state_disbursement);
+                $('#editCentralDisbursement').val(scheme.central_disbursement);
+                $('#editTotalDisbursement').val(scheme.total_disbursement);
+                $('#editDataForm').attr('action', `/dashboard/nsap-scheme/edit/${scheme.id}`);
+                $('#loaderBox').css("display", "none");
 
-                // Fetch roles and populate the select box
-                $.ajax({
-                    url: `/dashboard/roles/list`,
-                    type: 'GET',
-                    success: function (roles) {
-                        let roleOptions = '<option value="">Select a role</option>';
-                        roles.forEach(role => {
-                            roleOptions += `<option value="${role.id}" ${user.roles[0] && user.roles[0].id === role.id ? 'selected' : ''}>${role.name}</option>`;
-                        });
-                        $('#roleSelect').html(roleOptions);
-                        $('#roleSelect').select2({
-                            dropdownParent: $('#editDataModal'),
-                            width: '100%'
-                        });
-                        $('#roleSelect').trigger('change');
-                        $('#loaderBox').css("display", "none");
-
-                        const myModal = new bootstrap.Modal(document.getElementById('editDataModal'));
-                        myModal.show();
-                    },
-                    error: function (xhr) {
-                        $('#loaderBox').css("display", "none");
-                        Swal.fire('Error', 'Unable to fetch roles', 'error');
-                    }
-                });
+                const myModal = new bootstrap.Modal(document.getElementById('editDataModal'));
+                myModal.show();
             },
             error: function (xhr) {
                 $('#loaderBox').css("display", "none");
-                Swal.fire('Error', 'Unable to fetch user data', 'error');
+                Swal.fire('Error', 'Unable to fetch scheme data', 'error');
             }
         });
     });
 
-    $(".delete-user").click(function (e) {
+    $(".delete-scheme").click(function (e) {
         e.preventDefault();
-        const userId = $(this).data('id');
+        const schemeId = $(this).data('id');
 
         Swal.fire({
             title: 'Are you sure?',
@@ -75,7 +57,7 @@ $(document).ready(function () {
                 $('#loaderBox').css("display", "flex");
 
                 $.ajax({
-                    url: `/dashboard/user/delete/${userId}`,
+                    url: `/dashboard/nsap-scheme/delete/${schemeId}`,
                     type: 'DELETE',
                     success: function (response) {
                         $('#loaderBox').css("display", "none");
@@ -84,14 +66,14 @@ $(document).ready(function () {
                         });
                     },
                     error: function (xhr) {
+                        console.log(xhr);
                         $('#loaderBox').css("display", "none");
-                        Swal.fire('Error', 'Unable to delete user', 'error');
+                        Swal.fire('Error', 'Unable to delete NSAP Scheme', 'error');
                     }
                 });
             }
         });
     });
-
 
     $("#editDataForm").submit(function (e) {
         e.preventDefault();
@@ -131,20 +113,34 @@ $(document).ready(function () {
     function validateForm() {
         let isValid = true;
 
-        if ($('#editName').val().trim() === '') {
+        if ($('#editSchemeCode').val().trim() === '') {
             isValid = false;
         }
 
-        if ($('#editEmail').val().trim() === '') {
+        if ($('#editSchemeName').val().trim() === '') {
             isValid = false;
         }
 
-        if ($('#roleSelect').val() === null || $('#roleSelect').val() === '') {
+        if ($('#editCentralStateScheme').val().trim() === '') {
+            isValid = false;
+        }
+
+        if ($('#editFinYear').val().trim() === '') {
+            isValid = false;
+        }
+
+        if ($('#editStateDisbursement').val().trim() === '') {
+            isValid = false;
+        }
+
+        if ($('#editCentralDisbursement').val().trim() === '') {
+            isValid = false;
+        }
+
+        if ($('#editTotalDisbursement').val().trim() === '') {
             isValid = false;
         }
 
         return isValid;
     }
-
-    
 });

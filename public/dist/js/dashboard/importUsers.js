@@ -120,7 +120,7 @@ $(document).ready(function () {
 
         // Initialize DataTable after populating the table
         table = $('#dataTable').DataTable({
-            responsive: true
+            scrollX: true
         });
     }
 

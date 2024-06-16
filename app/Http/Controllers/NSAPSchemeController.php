@@ -105,5 +105,48 @@ class NSAPSchemeController extends Controller
         ]);
     }
 
+    public function loadNsapSchemeView()
+    {
+        $nsapSchemes = NsapScheme::all();
+        return view('dashboard.nsapScheme', compact('nsapSchemes'));
+    }
+
+    public function getNsapSchemeData($id)
+    {
+        $scheme = NsapScheme::findOrFail($id);
+        return response()->json($scheme);
+    }
+
+    public function updateNsapSchemeData(Request $request, $id)
+    {
+        $scheme = NsapScheme::findOrFail($id);
+
+        $validator = Validator::make($request->all(), [
+            'scheme_code' => 'required|string|max:255',
+            'scheme_name' => 'required|string|max:255',
+            'central_state_scheme' => 'required|string|max:255',
+            'fin_year' => 'required|string|max:255',
+            'state_disbursement' => 'required|numeric',
+            'central_disbursement' => 'required|numeric',
+            'total_disbursement' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->first()], 422);
+        }
+
+        $scheme->update($request->all());
+
+        return response()->json(['message' => 'NSAP Scheme updated successfully.']);
+    }
+
+    public function destroyNsapSchemeData($id)
+    {
+        $scheme = NsapScheme::findOrFail($id);
+        $scheme->delete();
+
+        return response()->json(['message' => 'NSAP Scheme deleted successfully.']);
+    }
+
 
 }
