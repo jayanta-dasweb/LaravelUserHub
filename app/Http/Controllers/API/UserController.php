@@ -6,16 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
-/**
- * @OA\Info(
- *      version="1.0.0",
- *      title="User API",
- *      description="User Management API",
- *      @OA\Contact(
- *          email="support@example.com"
- *      )
- * )
- */
+
 
 /**
  * @OA\Get(
