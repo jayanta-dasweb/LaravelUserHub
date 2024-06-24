@@ -10,7 +10,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".edit-user").click(function (e) {
+    $('#dataTable').on('click', '.edit-user', function (e)  {
         e.preventDefault();
         const userId = $(this).data('id');
         $('#loaderBox').css("display", "flex");
@@ -35,7 +35,7 @@ $(document).ready(function () {
     });
 
     //get all roles
-    $(".assign-role").click(function (e) {
+    $('#dataTable').on('click', '.assign-role', function (e) {
         e.preventDefault();
         loadPermissions();
         const userId = $(this).data('id');
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 
     // delete user data 
-    $(".delete-user").click(function (e) {
+    $('#dataTable').on('click', '.delete-user', function (e) {
         e.preventDefault();
         const userId = $(this).data('id');
 

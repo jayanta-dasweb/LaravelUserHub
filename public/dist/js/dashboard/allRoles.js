@@ -14,7 +14,7 @@ $(document).ready(function () {
     let currentRoleId;
 
     // Event listener for Edit button
-    $('.edit-role').click(function () {
+    $('#dataTable').on('click', '.edit-role', function (e) {
         $('#loaderBox').css("display", "flex");
         currentRoleId = $(this).data('id');
 

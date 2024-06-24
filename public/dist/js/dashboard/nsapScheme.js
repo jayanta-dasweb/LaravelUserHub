@@ -10,7 +10,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".edit-scheme").click(function (e) {
+   $('#dataTable').on('click', '.edit-scheme', function (e) {
         e.preventDefault();
         const id = $(this).data('id');
         $('#loaderBox').css("display", "flex");
@@ -39,8 +39,8 @@ $(document).ready(function () {
             }
         });
     });
-
-    $(".delete-scheme").click(function (e) {
+    
+    $('#dataTable').on('click', '.delete-scheme', function (e) {
         e.preventDefault();
         const schemeId = $(this).data('id');
 
